@@ -1,0 +1,3 @@
+module github.com/MitAyush/observability-lab
+
+go 1.27.1
