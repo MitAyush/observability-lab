@@ -3,23 +3,16 @@ package main
 import (
 	"log/slog"
 	"os"
+	"time"
 	"uuid"
 )
 
 func main() {
-	file, err := os.OpenFile(
-		"app.log",
-		os.O_CREATE|os.O_APPEND|os.O_WRONLY,
-		0644,
-	)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
+	time.Sleep(10* time.Second)
 	logger := slog.New(
-		slog.NewJSONHandler(file, nil),
+		slog.NewJSONHandler(os.Stdout, nil),
 	)
+
 	id := uuid.New().String()
 	println(id)
 
@@ -38,10 +31,9 @@ func main() {
 	)
 
 	nextService(*logger, id)
-	
 }
 
-func nextService(logger slog.Logger, id string){
+func nextService(logger slog.Logger, id string) {
 	logger.Error(
 		"database transaction failed",
 		"service", "audit-service",
